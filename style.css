@@ -13,10 +13,84 @@ html {
 body {
   font-family: 'Helvetica', sans-serif;
   min-height: 100vh;
-  background-color: antiquewhite;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2rem;
+  animation: fadein 1s;
+  font-size: 2rem;
+  font-weight: 900;
 }
 
+@keyframes fadein {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.controls__grid-width {
+  border: none;
+  font: inherit;
+  background-color: transparent;
+  color: inherit;
+  text-align: center;
+  caret-color: #ccc;
+  min-width: 5ch;
+}
+
+.controls__grid-width:focus {
+  outline: none;
+}
+
+.controls__grid-width:invalid {
+  border: red solid 1px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.controls__grid-width::placeholder {
+  color: var(--placeholder-text-color, #ccc);
+}
+
+.controls__grid-width:focus::placeholder {
+  color: transparent;
+}
+
+.grid {
+  width: 640px;
+  height: 640px;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid__cell {
+  border: #ccc solid 1px;
+}
+
+.color {
+  background-color: black;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.options > * {
+  border: none;
+  font: inherit;
+  background-color: transparent;
+  text-align: center;
+  cursor: pointer;
+  width: 9ch;
+}
+
+.options > *:hover {
+  transform: scale(1.05);
+}
