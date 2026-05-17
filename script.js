@@ -80,7 +80,7 @@ options.appendChild(gridlinesToggle);
 
 let colorMode = 'black'
 
-// one listener handles everything
+// One listener handles everything
 grid.addEventListener('mouseover', e => {
     if (!e.target.classList.contains('grid__cell')) return
 
@@ -103,7 +103,7 @@ grid.addEventListener('mouseover', e => {
     }
 })
 
-// buttons just change the state variable
+// Buttons just change the state variable
 color.addEventListener('click', () => colorMode = 'black')
 rainbow.addEventListener('click', () => colorMode = 'rainbow')
 grayscale.addEventListener('click', () => colorMode = 'grayscale')
@@ -118,3 +118,8 @@ gridlinesToggle.addEventListener('click', () => {
 })
 
 populateGrid(16);
+
+// Edit UI, specifically buttons on the bottom.
+// Make it so the coloring turns on with a click, then turns off with click.
+// Make it so clear keeps the current color and not black.
+// Add the color selector to color.
