@@ -68,18 +68,77 @@ eraser.textContent = 'eraser';
 const clear = document.createElement('button');
 clear.classList.add('options__clear');
 clear.textContent = 'clear';
+const gridlinesToggle = document.createElement('button');
+gridlinesToggle.classList.add('options__gridlines-toggle');
+gridlinesToggle.textContent = 'gridlines'
 options.appendChild(grayscale);
 options.appendChild(rainbow);
 options.appendChild(color);
 options.appendChild(eraser);
 options.appendChild(clear);
+options.appendChild(gridlinesToggle);
 
 // Event listener to color upon hover
 grid.addEventListener('mouseover', e => {
   if (e.target.classList.contains('grid__cell')) {
-    e.target.classList.add('color');
+    e.target.style.backgroundColor = 'black';
   }
 })
 
+// Get grayscale color
+function grayscaleColor() {
+  grid.addEventListener('mouseover', e => {
+    if (e.target.classList.contains('grid__cell')) {
+      e.target.style.backgroundColor = 'black';
+      const current = parseFloat(e.target.style.opacity || 0);
+      if (current < 1) {
+        e.target.style.opacity = Math.min(1, current + 0.1);
+      }
+    }
+  })
+}
+
+// Get rainbow color
+function rainbowColor() {
+  const returnRandomNumber = () => Math.floor(Math.random()*255);
+  grid.addEventListener('mouseover', e => {
+    if (e.target.classList.contains('grid__cell')) {
+      e.target.style.backgroundColor = `rgb(${returnRandomNumber()}, ${returnRandomNumber()}, ${returnRandomNumber()})`;
+    }
+  })
+}
+
+// Get eraser
+function getEraser() {
+  grid.addEventListener('mouseover', e => {
+    if (e.target.classList.contains('grid__cell')) {
+      e.target.style.backgroundColor = 'white';
+    }
+  })
+}
+
+// Get black color again after getting eraser
+function getColor() {
+  grid.addEventListener('mouseover', e => {
+    if (e.target.classList.contains('grid__cell')) {
+      e.target.style.backgroundColor = 'black';
+    }
+  })
+}
+
+// Function clear the grid
+function clearGrid() {
+  if (!gridWidth.value) gridWidth.value = 16;
+  populateGrid(gridWidth.value);
+}
+
+grayscale.addEventListener('click', event => grayscaleColor());
+rainbow.addEventListener('click', event => rainbowColor());
+color.addEventListener('click', event => getColor());
+eraser.addEventListener('click', event => getEraser());
+clear.addEventListener('click', event => clearGrid());
+gridlinesToggle.addEventListener('click', event => {
+  grid.classList.toggle('no-border')
+})
 
 populateGrid(16);

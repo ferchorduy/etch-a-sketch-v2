@@ -72,10 +72,6 @@ input::-webkit-inner-spin-button {
   border: #ccc solid 1px;
 }
 
-.color {
-  background-color: black;
-}
-
 .options {
   display: flex;
   justify-content: center;
@@ -93,4 +89,8 @@ input::-webkit-inner-spin-button {
 
 .options > *:hover {
   transform: scale(1.05);
+}
+
+.no-border .grid__cell {
+  border: none;
 }
