@@ -7,7 +7,7 @@
 }
 
 html {
-  font-size: 16;
+  font-size: 16px;
 }
 
 body {
@@ -85,12 +85,14 @@ input::-webkit-inner-spin-button {
   text-align: center;
   cursor: pointer;
   width: 9ch;
+  opacity: 0.5;
 }
 
 .options > *:hover {
   transform: scale(1.05);
+  opacity: 1;
 }
 
-.no-border .grid__cell {
+.grid--no-border .grid__cell {
   border: none;
 }

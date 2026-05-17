@@ -78,67 +78,43 @@ options.appendChild(eraser);
 options.appendChild(clear);
 options.appendChild(gridlinesToggle);
 
-// Event listener to color upon hover
+let colorMode = 'black'
+
+// one listener handles everything
 grid.addEventListener('mouseover', e => {
-  if (e.target.classList.contains('grid__cell')) {
-    e.target.style.backgroundColor = 'black';
-  }
+    if (!e.target.classList.contains('grid__cell')) return
+
+    if (colorMode === 'black') {
+        e.target.style.backgroundColor = 'black'
+
+    } else if (colorMode === 'rainbow') {
+        const r = () => Math.floor(Math.random() * 255)
+        e.target.style.backgroundColor = `rgb(${r()}, ${r()}, ${r()})`
+
+    } else if (colorMode === 'grayscale') {
+        const current = parseFloat(e.target.dataset.shade || 0)
+        const next = Math.min(1, current + 0.1)
+        e.target.dataset.shade = next
+        e.target.style.backgroundColor = `rgba(0, 0, 0, ${next})`
+
+    } else if (colorMode === 'eraser') {
+        e.target.style.backgroundColor = 'white'
+        delete e.target.dataset.shade
+    }
 })
 
-// Get grayscale color
-function grayscaleColor() {
-  grid.addEventListener('mouseover', e => {
-    if (e.target.classList.contains('grid__cell')) {
-      e.target.style.backgroundColor = 'black';
-      const current = parseFloat(e.target.style.opacity || 0);
-      if (current < 1) {
-        e.target.style.opacity = Math.min(1, current + 0.1);
-      }
-    }
-  })
-}
+// buttons just change the state variable
+color.addEventListener('click', () => colorMode = 'black')
+rainbow.addEventListener('click', () => colorMode = 'rainbow')
+grayscale.addEventListener('click', () => colorMode = 'grayscale')
+eraser.addEventListener('click', () => colorMode = 'eraser')
+clear.addEventListener('click', () => {
+    colorMode = 'black'
+    populateGrid(gridWidth.value || 16)
+})
 
-// Get rainbow color
-function rainbowColor() {
-  const returnRandomNumber = () => Math.floor(Math.random()*255);
-  grid.addEventListener('mouseover', e => {
-    if (e.target.classList.contains('grid__cell')) {
-      e.target.style.backgroundColor = `rgb(${returnRandomNumber()}, ${returnRandomNumber()}, ${returnRandomNumber()})`;
-    }
-  })
-}
-
-// Get eraser
-function getEraser() {
-  grid.addEventListener('mouseover', e => {
-    if (e.target.classList.contains('grid__cell')) {
-      e.target.style.backgroundColor = 'white';
-    }
-  })
-}
-
-// Get black color again after getting eraser
-function getColor() {
-  grid.addEventListener('mouseover', e => {
-    if (e.target.classList.contains('grid__cell')) {
-      e.target.style.backgroundColor = 'black';
-    }
-  })
-}
-
-// Function clear the grid
-function clearGrid() {
-  if (!gridWidth.value) gridWidth.value = 16;
-  populateGrid(gridWidth.value);
-}
-
-grayscale.addEventListener('click', event => grayscaleColor());
-rainbow.addEventListener('click', event => rainbowColor());
-color.addEventListener('click', event => getColor());
-eraser.addEventListener('click', event => getEraser());
-clear.addEventListener('click', event => clearGrid());
-gridlinesToggle.addEventListener('click', event => {
-  grid.classList.toggle('no-border')
+gridlinesToggle.addEventListener('click', () => {
+    grid.classList.toggle('grid--no-border')
 })
 
 populateGrid(16);
